@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +10,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerInput playerController;
     [SerializeField] InputAction moveInput;
     [SerializeField] InputAction jumpInput;
-    [SerializeField] WheelJoint2D wheel;
-    [SerializeField] float moveSpeed;
-    [SerializeField] float maxTorque;
-
+    [SerializeField] WheelJoint2D connectedBall;
+    [SerializeField] Rigidbody2D playerRb;
+    [SerializeField] float jumpForce;
+    [SerializeField] float airControl;
     private void OnEnable()
     {
         jumpInput.performed += Jump;
@@ -34,21 +35,30 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerMovement()
     {
-        if (Mathf.Abs(moveInput.ReadValue<float>()) > 0.1f)
+        if(connectedBall == null)
         {
-            // Set motor speed based on input
-            JointMotor2D motor = wheel.motor;
-            motor.motorSpeed = moveSpeed * moveInput.ReadValue<float>();
-            wheel.motor = motor;
-            wheel.useMotor = true;
+            playerRb.velocity = new Vector2(moveInput.ReadValue<float>() * airControl, playerRb.velocity.y);
         }
         else
         {
-            wheel.useMotor = false;
+            return;
         }
     }
+
     public void Jump(InputAction.CallbackContext context)
     {
         Debug.Log("Player Has Jumped");
+        connectedBall.connectedBody = null;
+        playerRb.AddForce(Vector2.up * jumpForce);
+
+    }
+
+    public void AttachBall(WheelJoint2D wheel)
+    {
+        connectedBall = wheel;
+    }
+    public void DetachBall()
+    {
+        connectedBall = null;
     }
 }
