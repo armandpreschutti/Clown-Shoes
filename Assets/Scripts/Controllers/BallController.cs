@@ -47,6 +47,7 @@ public class BallController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            Debug.Log("Player landed on ball");
             collision.GetComponent<PlayerController>().AttachBall(ball);
             ball.connectedBody = collision.GetComponent<Rigidbody2D>();
             playerController = collision.GetComponent<PlayerInput>();
