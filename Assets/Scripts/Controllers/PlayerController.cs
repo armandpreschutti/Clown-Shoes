@@ -13,17 +13,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] WheelJoint2D connectedBall;
     [SerializeField] GameObject lastBall;
     [SerializeField] Rigidbody2D playerRb;
+    [SerializeField] Collider2D playerCol;
     [SerializeField] float jumpForce;
     [SerializeField] float airControl;
-    [SerializeField] bool isGrounded;
+    public bool onBall;
 
     private void OnEnable()
     {
         jumpInput.performed += Jump;
+        BalanceController.OnFall += LaunchPlayer;
     }
     private void OnDisable()
     {
         jumpInput.performed -= Jump;
+        BalanceController.OnFall -= LaunchPlayer;
     }
 
     private void Awake()
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             connectedBall = wheel;
             lastBall = wheel.gameObject;
+            onBall = true;
         }
         else
         {
@@ -84,6 +88,7 @@ public class PlayerController : MonoBehaviour
     public void DetachBall()
     {
         connectedBall = null;
+        onBall = false;
     }
 
 
@@ -91,31 +96,27 @@ public class PlayerController : MonoBehaviour
         return connectedBall != null;
     }
 
-    // Trigger Box Logic
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
+    public void LaunchPlayer()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Player is grounded");
-            isGrounded = true;
-        }
-        else
-        {
-            return;
-        }
+        Debug.Log("Player was launched");
+        connectedBall.useMotor = false;
+        connectedBall.connectedBody = null;
+        playerCol.enabled = false;
+        playerRb.AddForce(Vector2.up * jumpForce *2);
+        StartCoroutine(RespawnDelay());
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public IEnumerator RespawnDelay()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            Debug.Log("Player is no longer grounded");
-            isGrounded = false;
-        }
-        else
-        {
-            return;
-        }
-    }*/
+        yield return new WaitForSeconds(3f);
+        RespawnPlayer();
+    }
+    public void RespawnPlayer()
+    {
+        connectedBall = lastBall.GetComponent<WheelJoint2D>();
+        connectedBall.connectedBody = playerRb;
+        connectedBall.useMotor = true;
+        playerCol.enabled = true;
+    }
+
 }

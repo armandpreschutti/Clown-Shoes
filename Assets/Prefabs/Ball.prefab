@@ -116,7 +116,7 @@ WheelJoint2D:
   m_ConnectedAnchor: {x: 0, y: -1.1}
   m_Suspension:
     m_DampingRatio: 1
-    m_Frequency: 3
+    m_Frequency: 100
     m_Angle: 90
   m_UseMotor: 0
   m_Motor:
@@ -268,8 +268,8 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   ball: {fileID: 8205276114618916867}
-  moveSpeed: 700
-  maxTorque: 1000
+  moveSpeed: 500
+  maxTorque: 1500
   playerRb: {fileID: 0}
   isDriving: 0
 --- !u!1 &4829530872078001480
