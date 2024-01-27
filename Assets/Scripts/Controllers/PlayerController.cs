@@ -86,6 +86,11 @@ public class PlayerController : MonoBehaviour
         connectedBall = null;
     }
 
+
+    public Boolean IsAttachedToBall() {
+        return connectedBall != null;
+    }
+
     // Trigger Box Logic
 
     /*private void OnCollisionEnter2D(Collision2D collision)

@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class BallController : MonoBehaviour
 {
     [SerializeField] PlayerInput playerController;
+    [SerializeField] Transform attachmentPoint;
 
     [SerializeField] InputAction moveInput;
     [SerializeField] WheelJoint2D ball;
@@ -48,10 +49,16 @@ public class BallController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Player landed on ball");
-            collision.GetComponent<PlayerController>().AttachBall(ball);
-            ball.connectedBody = collision.GetComponent<Rigidbody2D>();
-            playerController = collision.GetComponent<PlayerInput>();
-            moveInput = playerController.actions["Move"];
+            GameObject player = collision.gameObject;
+            PlayerController playerController = player.GetComponent<PlayerController>();
+            if (playerController != null && !playerController.IsAttachedToBall()) {
+                player.transform.position = attachmentPoint.position;
+                player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                playerController.AttachBall(ball);
+                ball.connectedBody = collision.GetComponent<Rigidbody2D>();
+                PlayerInput input = collision.GetComponent<PlayerInput>();
+                moveInput = input.actions["Move"];
+            }
             isDriving = true;
         }
     }

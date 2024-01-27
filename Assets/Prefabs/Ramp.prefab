@@ -70,11 +70,11 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: 0.013524532, y: 0.001313448}
-  - {x: 0.6831142, y: 0.17563578}
-  - {x: 1.4725702, y: 0.6400443}
-  - {x: 1.9891022, y: 1.5128679}
+  - {x: 0.82794225, y: 0.13690011}
+  - {x: 1.4070796, y: 0.42710775}
+  - {x: 1.9789889, y: 0.8776202}
   - {x: 1.976891, y: 0.013524532}
-  - {x: 0.013524532, y: 0.001313448}
+  - {x: 0.5525842, y: 0.009014308}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -126,8 +126,8 @@ SpriteShapeRenderer:
   m_ShapeTexture: {fileID: 0}
   m_Sprites: []
   m_LocalAABB:
-    m_Center: {x: 1.0013134, y: 0.7570907, z: 0}
-    m_Extent: {x: 0.98778886, y: 0.75577724, z: 0}
+    m_Center: {x: 0.9962567, y: 0.43946683, z: 0}
+    m_Extent: {x: 0.9827322, y: 0.4381534, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &3369326421891294325
 MonoBehaviour:
@@ -152,7 +152,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 0.67292607, y: 0.16964251, z: 0}
+    - position: {x: 0.3876871, y: 0.039445102, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -160,7 +160,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 1.4725702, y: 0.6400443, z: 0}
+    - position: {x: 0.82127666, y: 0.13377205, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -168,7 +168,23 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 1.9891022, y: 1.5128679, z: 0}
+    - position: {x: 1.3444468, y: 0.37929, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 1.7015163, y: 0.6518993, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 1.9789889, y: 0.8776202, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -202,8 +218,8 @@ MonoBehaviour:
   m_Modifiers: []
   m_ColliderSegment:
   - {x: 0.013524532, y: 0.001313448}
-  - {x: 0.6831142, y: 0.17563578}
-  - {x: 1.4725702, y: 0.6400443}
-  - {x: 1.9891022, y: 1.5128679}
+  - {x: 0.82794225, y: 0.13690011}
+  - {x: 1.4070796, y: 0.42710775}
+  - {x: 1.9789889, y: 0.8776202}
   - {x: 1.976891, y: 0.013524532}
   - {x: 0.013524532, y: 0.001313448}
