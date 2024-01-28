@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1219978460120671984}
   - component: {fileID: 212908225459628529}
   - component: {fileID: 2683848590520070532}
-  - component: {fileID: 6924373268295090442}
   - component: {fileID: 5190698934161180753}
   - component: {fileID: 3857211043308521934}
   m_Layer: 0
@@ -30,12 +29,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7194202549855888096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.65, y: -5.18, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1219978460120671984
 SpriteRenderer:
@@ -136,43 +135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60c26dd65f85a948ad93d1db76f4324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6924373268295090442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7194202549855888096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f69cbe4050d51574c884d0c51b322272, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
-  moveInput:
-    m_Name: Move Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 9a3c4fdc-ea14-4bb8-9653-9c08a75b866b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  jumpInput:
-    m_Name: Jump Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4a056d58-239e-409a-ab19-693dda2f1e52
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  connectedBall: {fileID: 0}
-  lastBall: {fileID: 0}
-  playerRb: {fileID: 0}
-  jumpForce: 0
-  airControl: 0
-  isGrounded: 0
 --- !u!114 &5190698934161180753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +162,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
