@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3369326421891294325}
   m_Layer: 0
   m_Name: Ramp
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ EdgeCollider2D:
   - {x: 1.4070796, y: 0.42710775}
   - {x: 1.9789889, y: 0.8776202}
   - {x: 1.976891, y: 0.013524532}
-  - {x: 0.5525842, y: 0.009014308}
+  - {x: 0.013524532, y: 0.001313448}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

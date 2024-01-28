@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 6270756535756521477}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -272,6 +272,7 @@ MonoBehaviour:
   maxTorque: 1500
   playerRb: {fileID: 0}
   isDriving: 0
+  originPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &4829530872078001480
 GameObject:
   m_ObjectHideFlags: 0
