@@ -10,6 +10,7 @@ public class HazardJuggler : MonoBehaviour
     [SerializeField] public float interval;
     [SerializeField] public float expiry = 10f;
     [SerializeField] public float height;
+    [SerializeField] public float delay = 0f;
 
     [SerializeField] public List<Tuple<GameObject, float>> activeHazards;
 
@@ -23,7 +24,7 @@ public class HazardJuggler : MonoBehaviour
     void Start()
     {
         activeHazards = new List<Tuple<GameObject, float>>();
-        InvokeRepeating("ThrowHazard", interval, interval);
+        InvokeRepeating("ThrowHazard", interval+ delay, interval);
 
     }
 

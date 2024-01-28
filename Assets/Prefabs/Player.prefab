@@ -344,12 +344,13 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   connectedBall: {fileID: 0}
-  lastBall: {fileID: 0}
   playerRb: {fileID: 3144366024396555751}
   playerCol: {fileID: 3623533655372114367}
-  jumpForce: 350
+  jumpForce: 500
   airControl: 5
+  lastBall: {fileID: 0}
   onBall: 0
+  alive: 1
 --- !u!95 &4627241143533613997
 Animator:
   serializedVersion: 5
