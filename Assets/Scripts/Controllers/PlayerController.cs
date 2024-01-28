@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider2D playerCol;
     [SerializeField] float jumpForce;
     [SerializeField] float airControl;
+    [SerializeField] BalanceController balanceController;
     public bool onBall;
+    public bool alive = true;
 
     private void OnEnable()
     {
@@ -44,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerMovement()
     {
-        if(connectedBall == null)
+        if(connectedBall == null && alive)
         {
             playerRb.velocity = new Vector2(moveInput.ReadValue<float>() * airControl, playerRb.velocity.y);
         }
@@ -56,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (/*!isGrounded && */connectedBall != null)
+        if (/*!isGrounded && */connectedBall != null && alive)
         {
             connectedBall.connectedBody = null;
             playerRb.AddForce(Vector2.up * jumpForce);
@@ -72,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
     public void AttachBall(WheelJoint2D wheel)
     {
-        if (connectedBall == null)
+        if (connectedBall == null && alive)
         {
             connectedBall = wheel;
             lastBall = wheel.gameObject;
@@ -102,9 +105,18 @@ public class PlayerController : MonoBehaviour
         connectedBall.useMotor = false;
         connectedBall.connectedBody = null;
         playerCol.enabled = false;
-        playerRb.AddForce(Vector2.up * jumpForce *2);
+        playerRb.AddForce(Vector2.up * jumpForce *4);
+        Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
+        float detachAngularForce = Random.Range(-1, 1) * 3600;
+        playerRb.AddForce(detachForce);
+        playerRb.freezeRotation = false;
+        playerRb.angularVelocity = detachAngularForce;
+        GetComponent<CapsuleCollider2D>().enabled = false; 
+        //balanceController.enabled=false
+        alive = false;
         StartCoroutine(RespawnDelay());
     }
+
 
     public IEnumerator RespawnDelay()
     {
@@ -117,6 +129,11 @@ public class PlayerController : MonoBehaviour
         connectedBall.connectedBody = playerRb;
         connectedBall.useMotor = true;
         playerCol.enabled = true;
+
+        playerRb.freezeRotation = true;
+        playerRb.angularVelocity = 0;
+        alive = true;
+        //balanceController.enabled=true
     }
 
 }
