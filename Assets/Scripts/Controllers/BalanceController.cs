@@ -23,6 +23,15 @@ public class BalanceController : MonoBehaviour
         moveInput = playerInput.actions["Move"];
     }
 
+    private void OnEnable()
+    {
+        PlayerController.OnRespawn += ResetBalance;
+    }
+    private void OnDisable()
+    {
+        PlayerController.OnRespawn -= ResetBalance;
+    }
+
     private void Update()
     {
         if (playerController.onBall)
@@ -60,6 +69,11 @@ public class BalanceController : MonoBehaviour
             OnFall?.Invoke();
             value = 0;
         }
+    }
+
+    public void ResetBalance(PlayerController playerController)
+    {
+        value = 0;
     }
 }
 

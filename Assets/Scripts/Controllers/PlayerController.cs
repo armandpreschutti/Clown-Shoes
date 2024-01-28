@@ -45,8 +45,6 @@ public class PlayerController : MonoBehaviour
         PlayerMovement();      
     }
 
-    // Player Control Logic
-
     public void PlayerMovement()
     {
         if(connectedBall == null && alive)
@@ -103,7 +101,6 @@ public class PlayerController : MonoBehaviour
 
     public void LaunchPlayer()
     {
-        Debug.Log("Player was launched");
         connectedBall.useMotor = false;
         connectedBall.connectedBody = null;
         playerCol.enabled = false;
@@ -124,9 +121,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         RespawnPlayer();
     }
+
     public void RespawnPlayer()
     {
         OnRespawn?.Invoke(this);
+        transform.eulerAngles = Vector3.zero;
         playerCol.enabled = true;
         playerRb.freezeRotation = true;
         playerRb.angularVelocity = 0;
@@ -134,4 +133,20 @@ public class PlayerController : MonoBehaviour
         transform.position = lastBall.transform.position + new Vector3 (0, 10,0);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            playerCol.enabled = false;
+            playerRb.AddForce(Vector2.up * jumpForce * 4);
+            Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
+            float detachAngularForce = Random.Range(-1, 1) * 3600;
+            playerRb.AddForce(detachForce);
+            playerRb.freezeRotation = false;
+            playerRb.angularVelocity = detachAngularForce;
+            GetComponent<CapsuleCollider2D>().enabled = false;
+            alive = false;
+            StartCoroutine(RespawnDelay());
+        }
+    }
 }
