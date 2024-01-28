@@ -89,7 +89,7 @@ public class BallController : MonoBehaviour
     
     public void RepositionBall(PlayerController playerController)
     {
-        if(playerController.lastBall == this.gameObject)
+        if (playerController.lastBall == this.gameObject)
         {
             transform.position = originPoint;
             transform.rotation = Quaternion.identity;
@@ -99,8 +99,6 @@ public class BallController : MonoBehaviour
         else
         {
             return;
-        }
-       
-        
+        }        
     }
 }

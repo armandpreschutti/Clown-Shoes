@@ -27,11 +27,13 @@ public class PlayerController : MonoBehaviour
     {
         jumpInput.performed += Jump;
         BalanceController.OnFall += LaunchPlayer;
+        FinishLineHandler.OnFinish += DestoryPlayer;
     }
     private void OnDisable()
     {
         jumpInput.performed -= Jump;
         BalanceController.OnFall -= LaunchPlayer;
+        FinishLineHandler.OnFinish -= DestoryPlayer;
     }
 
     private void Awake()
@@ -148,5 +150,10 @@ public class PlayerController : MonoBehaviour
             alive = false;
             StartCoroutine(RespawnDelay());
         }
+    }
+
+    public void DestoryPlayer()
+    {
+        Destroy(this.gameObject);
     }
 }
