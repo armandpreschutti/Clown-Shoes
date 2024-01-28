@@ -25,6 +25,10 @@ public class BallController : MonoBehaviour
     {
         PlayerController.OnRespawn -= RepositionBall;
     }
+    private void Start()
+    {
+        originPoint = transform.position;
+    }
 
     void FixedUpdate()
     {
