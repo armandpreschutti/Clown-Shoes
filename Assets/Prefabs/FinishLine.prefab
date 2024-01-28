@@ -73,12 +73,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 813020612, guid: 131721a652851f84fa7a48bb28a625d8, type: 3}
+  m_Sprite: {fileID: 138788972, guid: dc066abb0d1ae7840b236ed29ead0a1c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.953125, y: 1}
+  m_Size: {x: 0.75, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   celebration: {fileID: 1732088185847173119}
-  canvas: {fileID: 0}
+  canvas: {fileID: 3354271777386829848}
 --- !u!61 &4235091554438206131
 BoxCollider2D:
   m_ObjectHideFlags: 0
