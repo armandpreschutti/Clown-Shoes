@@ -19,6 +19,7 @@ public class MusicHandler : MonoBehaviour
     public void PlayGraduationMusic()
     {
         audioSource.clip= graduation;
+        audioSource.volume= 1.0f;
         audioSource.Play();
     }
 }

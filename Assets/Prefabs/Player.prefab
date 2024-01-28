@@ -399,7 +399,7 @@ MonoBehaviour:
     m_Flags: 0
   currentBalance: 0
   leanDirection: 0
-  moveSpeed: 1.5
+  moveSpeed: 0.75
   lastInputDirection: 0
   value: 0
   balanceIndicator: {fileID: 7768774773918623449}
