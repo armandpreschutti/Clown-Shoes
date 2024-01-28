@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Debug.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 3c2d0e5b11ac4e0488a65d40762f53f9
+  - enabled: 1
+    path: Assets/Scenes/ClownCollegeLayout.unity
+    guid: c1d0bafd85fd54b4d941311a6edcdcad
   m_configObjects: {}
