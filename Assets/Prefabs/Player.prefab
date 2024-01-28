@@ -352,6 +352,7 @@ MonoBehaviour:
   lastBall: {fileID: 0}
   onBall: 0
   alive: 1
+  vCam: {fileID: 0}
 --- !u!95 &4627241143533613997
 Animator:
   serializedVersion: 5

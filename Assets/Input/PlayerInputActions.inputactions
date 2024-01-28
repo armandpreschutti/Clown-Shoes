@@ -26,7 +26,7 @@
             ],
             "bindings": [
                 {
-                    "name": "1D Axis",
+                    "name": "WASD",
                     "id": "d32a9994-3e74-419f-9220-ae034fa8924d",
                     "path": "1DAxis",
                     "interactions": "",
@@ -51,6 +51,39 @@
                     "name": "positive",
                     "id": "72c3452b-88eb-4982-8d3b-63b07e5d5d17",
                     "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Arrows",
+                    "id": "12834c14-ff4a-46db-a504-25c85e255da3",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "087dc71a-79ec-419c-9886-c4eaef521192",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "11bdb51d-f66f-4600-9932-1e5686ac28d1",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

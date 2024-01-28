@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     public bool onBall;
     public bool alive = true;
     public static Action<PlayerController> OnRespawn;
+    public static Action OnJump;
+    public static Action OnGround;
     public CinemachineVirtualCamera vCam;
 
     private void OnEnable()
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         if (connectedBall != null && alive)
         {
+            OnJump?.Invoke();
             connectedBall.connectedBody = null;
             playerRb.AddForce(Vector2.up * jumpForce);
         }
@@ -147,6 +150,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            OnGround?.Invoke();
             vCam.enabled = false;
             playerCol.enabled = false;
             playerRb.AddForce(Vector2.up * jumpForce * 4);
