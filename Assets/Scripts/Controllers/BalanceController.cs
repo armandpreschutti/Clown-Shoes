@@ -56,7 +56,7 @@ public class BalanceController : MonoBehaviour
     {
         if(Mathf.Abs(value) > 3)
         {
-            Debug.Log("Player had fallen");
+            Debug.Log("Player had fallen");            
             OnFall?.Invoke();
             value = 0;
         }

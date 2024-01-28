@@ -8,13 +8,23 @@ public class BallController : MonoBehaviour
 {
     [SerializeField] PlayerInput playerController;
     [SerializeField] Transform attachmentPoint;
-
     [SerializeField] InputAction moveInput;
     [SerializeField] WheelJoint2D ball;
     [SerializeField] float moveSpeed;
     [SerializeField] float maxTorque;
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] bool isDriving;
+
+    public Vector3 originPoint;
+
+    private void OnEnable()
+    {
+        PlayerController.OnRespawn += RepositionBall;
+    }
+    private void OnDisable()
+    {
+        PlayerController.OnRespawn -= RepositionBall;
+    }
 
     void FixedUpdate()
     {
@@ -71,5 +81,22 @@ public class BallController : MonoBehaviour
             playerController = null;
             isDriving = false;
         }
+    }
+    
+    public void RepositionBall(PlayerController playerController)
+    {
+        if(playerController.lastBall == this.gameObject)
+        {
+            transform.position = originPoint;
+            transform.rotation = Quaternion.identity;
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        }
+        else
+        {
+            return;
+        }
+       
+        
     }
 }
