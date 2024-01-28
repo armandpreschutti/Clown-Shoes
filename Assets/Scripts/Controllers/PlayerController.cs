@@ -12,14 +12,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InputAction moveInput;
     [SerializeField] InputAction jumpInput;
     [SerializeField] WheelJoint2D connectedBall;
-    [SerializeField] GameObject lastBall;
+    
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] Collider2D playerCol;
     [SerializeField] float jumpForce;
     [SerializeField] float airControl;
-    [SerializeField] BalanceController balanceController;
+
+    public GameObject lastBall;
     public bool onBall;
     public bool alive = true;
+    public static Action<PlayerController> OnRespawn;
 
     private void OnEnable()
     {
@@ -59,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (/*!isGrounded && */connectedBall != null && alive)
+        if (connectedBall != null && alive)
         {
             connectedBall.connectedBody = null;
             playerRb.AddForce(Vector2.up * jumpForce);
@@ -112,7 +114,6 @@ public class PlayerController : MonoBehaviour
         playerRb.freezeRotation = false;
         playerRb.angularVelocity = detachAngularForce;
         GetComponent<CapsuleCollider2D>().enabled = false; 
-        //balanceController.enabled=false
         alive = false;
         StartCoroutine(RespawnDelay());
     }
@@ -125,15 +126,12 @@ public class PlayerController : MonoBehaviour
     }
     public void RespawnPlayer()
     {
-        connectedBall = lastBall.GetComponent<WheelJoint2D>();
-        connectedBall.connectedBody = playerRb;
-        connectedBall.useMotor = true;
+        OnRespawn?.Invoke(this);
         playerCol.enabled = true;
-
         playerRb.freezeRotation = true;
         playerRb.angularVelocity = 0;
         alive = true;
-        //balanceController.enabled=true
+        transform.position = lastBall.transform.position + new Vector3 (0, 10,0);
     }
 
 }
