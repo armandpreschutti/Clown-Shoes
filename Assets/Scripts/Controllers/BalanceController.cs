@@ -17,6 +17,7 @@ public class BalanceController : MonoBehaviour
     public  float value;
     public Slider balanceIndicator;
     public static Action OnFall;
+    public SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -55,10 +56,13 @@ public class BalanceController : MonoBehaviour
         if (currentBalance > 0.1f)
         {
             lastInputDirection = 1;
+            spriteRenderer.flipX= false;
+
         }
         else if(currentBalance < -.01f)
         {
             lastInputDirection = -1;
+            spriteRenderer.flipX = true;
         }      
     } 
     public void Falling()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -17,11 +18,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider2D playerCol;
     [SerializeField] float jumpForce;
     [SerializeField] float airControl;
+    [SerializeField] Animator anim;
 
     public GameObject lastBall;
     public bool onBall;
     public bool alive = true;
     public static Action<PlayerController> OnRespawn;
+    public CinemachineVirtualCamera vCam;
 
     private void OnEnable()
     {
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = playerController.actions["Move"];
         jumpInput = playerController.actions["Jump"];
+        vCam = GameObject.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
     }
 
     private void FixedUpdate()
@@ -82,6 +86,7 @@ public class PlayerController : MonoBehaviour
             connectedBall = wheel;
             lastBall = wheel.gameObject;
             onBall = true;
+            anim.SetBool("Jump", false);
         }
         else
         {
@@ -92,8 +97,9 @@ public class PlayerController : MonoBehaviour
 
     public void DetachBall()
     {
+        anim.SetBool("Jump", true );
         connectedBall = null;
-        onBall = false;
+        onBall = false;        
     }
 
 
@@ -103,6 +109,7 @@ public class PlayerController : MonoBehaviour
 
     public void LaunchPlayer()
     {
+        vCam.enabled = false;
         connectedBall.useMotor = false;
         connectedBall.connectedBody = null;
         playerCol.enabled = false;
@@ -126,6 +133,7 @@ public class PlayerController : MonoBehaviour
 
     public void RespawnPlayer()
     {
+        vCam.enabled = true;
         OnRespawn?.Invoke(this);
         transform.eulerAngles = Vector3.zero;
         playerCol.enabled = true;
@@ -139,6 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            vCam.enabled = false;
             playerCol.enabled = false;
             playerRb.AddForce(Vector2.up * jumpForce * 4);
             Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
