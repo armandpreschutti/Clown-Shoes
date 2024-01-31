@@ -60,13 +60,13 @@ public class BallController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && ball.connectedBody == null)
         {
             Debug.Log("Player landed on ball");
             GameObject player = collision.gameObject;
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (playerController != null && !playerController.IsAttachedToBall()) {
-                player.transform.position = attachmentPoint.position;
+                /*player.transform.position = attachmentPoint.position;*/
                 player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 playerController.AttachBall(ball);
                 ball.connectedBody = collision.GetComponent<Rigidbody2D>();
