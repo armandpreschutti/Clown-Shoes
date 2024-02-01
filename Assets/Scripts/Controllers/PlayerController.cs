@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float airControl;
     [SerializeField] Animator anim;
-
+    [SerializeField] float respawnHeight;
     public GameObject lastBall;
     public bool onBall;
     public bool alive = true;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public static Action OnJump;
     public static Action OnGround;
     public static Action OnLaunch;
+    
 
 
     private void OnEnable()
@@ -70,7 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             OnJump?.Invoke();
             connectedBall.connectedBody = null;
-            playerRb.AddForce(Vector2.up * jumpForce);
+            playerRb.AddForce(new Vector2(moveInput.ReadValue<float>()*2, 1f) * jumpForce);
         }
         else
         {
@@ -118,12 +120,14 @@ public class PlayerController : MonoBehaviour
         }
         OnLaunch?.Invoke();
         playerCol.enabled = false;
-        playerRb.AddForce(Vector2.up * jumpForce *1.5f);
-        Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
-        float detachAngularForce = Random.Range(-1, 1) * 360;
-        playerRb.AddForce(detachForce);
+        playerRb.AddForce(new Vector2(Random.Range(-2f, 2f), Random.Range(1f, 2f) * jumpForce));
         playerRb.freezeRotation = false;
-        playerRb.angularVelocity = detachAngularForce;
+        playerRb.AddTorque(Random.Range(-1f, 1f) * 1000);
+        /*Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
+        float detachAngularForce = Random.Range(-1, 1) * 360;
+        playerRb.AddForce(detachForce);*/
+
+        //playerRb.angularVelocity = detachAngularForce;
         GetComponent<CapsuleCollider2D>().enabled = false; 
         alive = false;
         StartCoroutine(RespawnDelay());
@@ -143,8 +147,9 @@ public class PlayerController : MonoBehaviour
         playerCol.enabled = true;
         playerRb.freezeRotation = true;
         playerRb.angularVelocity = 0;
+        playerRb.velocity = Vector2.zero;
         alive = true;
-        transform.position = lastBall.transform.position + new Vector3 (0, 10,0);
+        transform.position = lastBall.transform.position + new Vector3 (0, respawnHeight,0);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
