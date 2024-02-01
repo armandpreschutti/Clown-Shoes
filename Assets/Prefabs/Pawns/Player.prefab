@@ -404,6 +404,7 @@ MonoBehaviour:
   value: 0
   balanceIndicator: {fileID: 7768774773918623449}
   spriteRenderer: {fileID: 1677866116793610066}
+  balanceBar: {fileID: 1037209841765975076}
 --- !u!1 &5020867609767808562
 GameObject:
   m_ObjectHideFlags: 0

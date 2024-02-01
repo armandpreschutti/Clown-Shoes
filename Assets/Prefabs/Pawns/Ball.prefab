@@ -110,11 +110,11 @@ WheelJoint2D:
   m_BreakForce: 0
   m_BreakTorque: 0
   m_BreakAction: 0
-  m_AutoConfigureConnectedAnchor: 1
+  m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: -1.1}
   m_Suspension:
-    m_DampingRatio: 1
+    m_DampingRatio: 0.1
     m_Frequency: 100
     m_Angle: 90
   m_UseMotor: 0

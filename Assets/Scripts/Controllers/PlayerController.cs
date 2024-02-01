@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Cinemachine;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -26,7 +25,8 @@ public class PlayerController : MonoBehaviour
     public static Action<PlayerController> OnRespawn;
     public static Action OnJump;
     public static Action OnGround;
-    public CinemachineVirtualCamera vCam;
+    public static Action OnLaunch;
+
 
     private void OnEnable()
     {
@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = playerController.actions["Move"];
         jumpInput = playerController.actions["Jump"];
-        vCam = GameObject.Find("Virtual Camera").GetComponent<CinemachineVirtualCamera>();
     }
 
     private void FixedUpdate()
@@ -112,13 +111,16 @@ public class PlayerController : MonoBehaviour
 
     public void LaunchPlayer()
     {
-        vCam.enabled = false;
-        connectedBall.useMotor = false;
-        connectedBall.connectedBody = null;
+        if (connectedBall != null)
+        {
+            connectedBall.useMotor = false;
+            connectedBall.connectedBody = null;
+        }
+        OnLaunch?.Invoke();
         playerCol.enabled = false;
-        playerRb.AddForce(Vector2.up * jumpForce *4);
+        playerRb.AddForce(Vector2.up * jumpForce *1.5f);
         Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
-        float detachAngularForce = Random.Range(-1, 1) * 3600;
+        float detachAngularForce = Random.Range(-1, 1) * 360;
         playerRb.AddForce(detachForce);
         playerRb.freezeRotation = false;
         playerRb.angularVelocity = detachAngularForce;
@@ -135,8 +137,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void RespawnPlayer()
-    {
-        vCam.enabled = true;
+    { 
         OnRespawn?.Invoke(this);
         transform.eulerAngles = Vector3.zero;
         playerCol.enabled = true;
@@ -148,20 +149,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && !onBall)
         {
             OnGround?.Invoke();
-            vCam.enabled = false;
-            playerCol.enabled = false;
-            playerRb.AddForce(Vector2.up * jumpForce * 4);
-            Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
-            float detachAngularForce = Random.Range(-1, 1) * 3600;
-            playerRb.AddForce(detachForce);
-            playerRb.freezeRotation = false;
-            playerRb.angularVelocity = detachAngularForce;
-            GetComponent<CapsuleCollider2D>().enabled = false;
-            alive = false;
-            StartCoroutine(RespawnDelay());
+            LaunchPlayer();
         }
     }
 

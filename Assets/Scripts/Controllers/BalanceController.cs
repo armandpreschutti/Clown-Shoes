@@ -16,8 +16,10 @@ public class BalanceController : MonoBehaviour
     public int lastInputDirection = 0;
     public  float value;
     public Slider balanceIndicator;
-    public static Action OnFall;
     public SpriteRenderer spriteRenderer;
+    public GameObject balanceBar;
+
+    public static Action OnFall;
 
     private void Awake()
     {
@@ -77,6 +79,7 @@ public class BalanceController : MonoBehaviour
 
     public void ResetBalance(PlayerController playerController)
     {
+        balanceBar.SetActive(true);
         value = 0;
     }
 }
