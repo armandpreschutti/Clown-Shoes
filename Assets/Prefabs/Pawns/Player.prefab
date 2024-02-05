@@ -343,12 +343,40 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  abortInput:
+    m_Name: Abort Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 95481ec9-94f7-4fdb-9844-2426f24e90c2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  mainMenuInput:
+    m_Name: Main Menu Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a09d3345-98c0-427b-b4eb-f844140941c4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  restartInput:
+    m_Name: Restart Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a308e576-d0be-4f0f-95e5-dc329534130c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   connectedBall: {fileID: 0}
   playerRb: {fileID: 3144366024396555751}
   playerCol: {fileID: 3623533655372114367}
   jumpForce: 600
   airControl: 9
   anim: {fileID: 4627241143533613997}
+  respawnHeight: 3
   lastBall: {fileID: 0}
   onBall: 0
   alive: 1
@@ -440,7 +468,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.75, y: 0.5}
+  m_SizeDelta: {x: 0.45, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5005961476833583603
 CanvasRenderer:
@@ -463,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23487401, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.6745098, g: 0.19607845, b: 0.19607845, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

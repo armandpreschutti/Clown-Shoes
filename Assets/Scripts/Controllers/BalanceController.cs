@@ -10,11 +10,11 @@ public class BalanceController : MonoBehaviour
     public PlayerInput playerInput;
     public PlayerController playerController;
     public InputAction moveInput;
-    public float currentBalance;
+    public float input;
     public bool leanDirection;
     public float moveSpeed = 0.1f;
     public int lastInputDirection = 0;
-    public  float value;
+    public  float currentBalance;
     public Slider balanceIndicator;
     public SpriteRenderer spriteRenderer;
     public GameObject balanceBar;
@@ -39,7 +39,7 @@ public class BalanceController : MonoBehaviour
     {
         if (playerController.onBall)
         {
-            currentBalance = moveInput.ReadValue<float>();
+            input = moveInput.ReadValue<float>();
             BalanceInput();
             Falling();
         }
@@ -52,16 +52,16 @@ public class BalanceController : MonoBehaviour
 
     public void BalanceInput()
     {
-        value += lastInputDirection * moveSpeed * Time.deltaTime;
-        balanceIndicator.value = value;
+        currentBalance += lastInputDirection * moveSpeed * Time.deltaTime;
+        balanceIndicator.value = currentBalance;
 
-        if (currentBalance > 0.1f)
+        if (input > 0.1f)
         {
             lastInputDirection = 1;
             spriteRenderer.flipX= false;
 
         }
-        else if(currentBalance < -.01f)
+        else if(input < -.01f)
         {
             lastInputDirection = -1;
             spriteRenderer.flipX = true;
@@ -69,18 +69,18 @@ public class BalanceController : MonoBehaviour
     } 
     public void Falling()
     {
-        if(Mathf.Abs(value) > 3)
+        if(Mathf.Abs(currentBalance) > 3)
         {
             Debug.Log("Player had fallen");            
             OnFall?.Invoke();
-            value = 0;
+            currentBalance = 0;
         }
     }
 
     public void ResetBalance(PlayerController playerController)
     {
         balanceBar.SetActive(true);
-        value = 0;
+        currentBalance = 0;
     }
 }
 

@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class BallController : MonoBehaviour
 {
     [SerializeField] PlayerInput playerController;
-    [SerializeField] Transform attachmentPoint;
     [SerializeField] InputAction moveInput;
     [SerializeField] WheelJoint2D ball;
     [SerializeField] float moveSpeed;
@@ -66,7 +65,6 @@ public class BallController : MonoBehaviour
             GameObject player = collision.gameObject;
             PlayerController playerController = player.GetComponent<PlayerController>();
             if (playerController != null && !playerController.IsAttachedToBall()) {
-                /*player.transform.position = attachmentPoint.position;*/
                 player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
                 playerController.AttachBall(ball);
                 ball.connectedBody = collision.GetComponent<Rigidbody2D>();
@@ -89,16 +87,20 @@ public class BallController : MonoBehaviour
     
     public void RepositionBall(PlayerController playerController)
     {
-        if (playerController.lastBall == this.gameObject)
-        {
-            transform.position = originPoint;
-            transform.rotation = Quaternion.identity;
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            GetComponent<Rigidbody2D>().angularVelocity = 0f;
-        }
-        else
-        {
-            return;
-        }        
+        transform.position = originPoint;
+        transform.rotation = Quaternion.identity;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        /* if (playerController.lastBall == this.gameObject)
+         {
+             transform.position = originPoint;
+             transform.rotation = Quaternion.identity;
+             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+             GetComponent<Rigidbody2D>().angularVelocity = 0f;
+         }
+         else
+         {
+             return;
+         }        */
     }
 }

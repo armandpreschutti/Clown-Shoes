@@ -85,7 +85,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: e25d4b7b11250a547800ec0fc47e5858, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -256,7 +256,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 0}
-  attachmentPoint: {fileID: 8856975874643699290}
   moveInput:
     m_Name: Move Input
     m_Type: 0
@@ -267,8 +266,8 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   ball: {fileID: 8205276114618916867}
-  moveSpeed: 500
-  maxTorque: 1500
+  moveSpeed: 600
+  maxTorque: 400
   playerRb: {fileID: 0}
   isDriving: 0
   originPoint: {x: 0, y: 0, z: 0}

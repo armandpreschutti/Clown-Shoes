@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerInput playerController;
     [SerializeField] InputAction moveInput;
     [SerializeField] InputAction jumpInput;
+    [SerializeField] InputAction abortInput;
+    [SerializeField] InputAction mainMenuInput;
+    [SerializeField] InputAction restartInput;
     [SerializeField] WheelJoint2D connectedBall;
     
     [SerializeField] Rigidbody2D playerRb;
@@ -33,12 +37,18 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         jumpInput.performed += Jump;
+        abortInput.performed += Abort;
+        restartInput.performed += RestartLevel;
+        mainMenuInput.performed += ReturnToMenu;
         BalanceController.OnFall += LaunchPlayer;
         FinishLineHandler.OnFinish += DestoryPlayer;
     }
     private void OnDisable()
     {
         jumpInput.performed -= Jump;
+        abortInput.performed -= Abort;
+        restartInput.performed -= RestartLevel;
+        mainMenuInput.performed -= ReturnToMenu;
         BalanceController.OnFall -= LaunchPlayer;
         FinishLineHandler.OnFinish -= DestoryPlayer;
     }
@@ -47,6 +57,9 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = playerController.actions["Move"];
         jumpInput = playerController.actions["Jump"];
+        abortInput = playerController.actions["Abort"];
+        restartInput = playerController.actions["RestartLevel"];
+        mainMenuInput = playerController.actions["MainMenu"];
     }
 
     private void FixedUpdate()
@@ -72,13 +85,27 @@ public class PlayerController : MonoBehaviour
         {
             OnJump?.Invoke();
             connectedBall.connectedBody = null;
-            playerRb.AddForce(new Vector2(moveInput.ReadValue<float>()*2, 1f) * jumpForce);
+            playerRb.AddForce(new Vector2(moveInput.ReadValue<float>(), 1f) * jumpForce);
         }
         else
         {
             return;
         }
+    }
 
+    public void Abort(InputAction.CallbackContext context)
+    {
+        LaunchPlayer();
+    }
+
+    public void RestartLevel(InputAction.CallbackContext context)
+    {
+        SceneManager.LoadScene("ClownCollegeLayout");
+    }
+
+    public void ReturnToMenu(InputAction.CallbackContext context)
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     // Ball Attachment Logic
@@ -163,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
     public void DestoryPlayer()
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 }

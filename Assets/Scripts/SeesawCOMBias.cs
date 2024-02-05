@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class SeesawCOMBias : MonoBehaviour
 {
-    [SerializeField] PlayerInput playerController;
     [SerializeField] public float bias;
     private Rigidbody2D rigidbody2D;
 
@@ -21,6 +20,11 @@ public class SeesawCOMBias : MonoBehaviour
         PlayerController.OnRespawn += OnReset;
     }
 
+    private void OnDisable()
+    {
+        PlayerController.OnRespawn -= OnReset;
+    }
+
     private void OnReset(PlayerController playerController)
     {
         rigidbody2D.angularVelocity = 0;
@@ -28,9 +32,9 @@ public class SeesawCOMBias : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
         rigidbody2D.AddForceAtPosition(new Vector2(0, -bias), new Vector2(-1, 0));
-    }
+    }*/
 
 }
