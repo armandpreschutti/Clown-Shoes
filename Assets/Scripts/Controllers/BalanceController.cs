@@ -12,7 +12,7 @@ public class BalanceController : MonoBehaviour
     public InputAction moveInput;
     public float input;
     public bool leanDirection;
-    public float moveSpeed = 0.1f;
+    public float moveSpeed;
     public int lastInputDirection = 0;
     public  float currentBalance;
     public Slider balanceIndicator;
@@ -29,10 +29,18 @@ public class BalanceController : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.OnRespawn += ResetBalance;
+        PlayerController.OnDeath += DeactivateBalance;
+        PlayerController.OnJump += DeactivateBalance;
+        PlayerController.OnLand += ReactivateBalance;
+        
     }
     private void OnDisable()
     {
         PlayerController.OnRespawn -= ResetBalance;
+        PlayerController.OnDeath -= DeactivateBalance;
+        PlayerController.OnJump -= DeactivateBalance;
+        PlayerController.OnLand -= ReactivateBalance;
+
     }
 
     private void Update()
@@ -77,10 +85,19 @@ public class BalanceController : MonoBehaviour
         }
     }
 
-    public void ResetBalance(PlayerController playerController)
+    public void DeactivateBalance()
+    {
+        balanceBar.SetActive(false);
+    }
+    public void ReactivateBalance()
     {
         balanceBar.SetActive(true);
-        currentBalance = 0;
     }
+    public void ResetBalance(PlayerController playerController)
+    {
+        currentBalance = 0;
+        ReactivateBalance();
+    }
+
 }
 

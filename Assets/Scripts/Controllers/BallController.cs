@@ -72,6 +72,7 @@ public class BallController : MonoBehaviour
                 moveInput = input.actions["Move"];
             }
             isDriving = true;
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -91,16 +92,5 @@ public class BallController : MonoBehaviour
         transform.rotation = Quaternion.identity;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         GetComponent<Rigidbody2D>().angularVelocity = 0f;
-        /* if (playerController.lastBall == this.gameObject)
-         {
-             transform.position = originPoint;
-             transform.rotation = Quaternion.identity;
-             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-             GetComponent<Rigidbody2D>().angularVelocity = 0f;
-         }
-         else
-         {
-             return;
-         }        */
     }
 }

@@ -1,0 +1,10 @@
+List of Events:
+
+On Respawn
+On Death (On Launch)
+On Hit Ground
+On Lose Balance
+On Jump
+On Double Jump
+On Land
+ 

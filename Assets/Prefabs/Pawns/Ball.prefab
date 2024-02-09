@@ -81,11 +81,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 4
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: e25d4b7b11250a547800ec0fc47e5858, type: 2}
+  m_Material: {fileID: 6200000, guid: 22f8da23de45fd34fade83ad3c58b860, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -266,8 +266,8 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   ball: {fileID: 8205276114618916867}
-  moveSpeed: 600
-  maxTorque: 400
+  moveSpeed: 350
+  maxTorque: 100
   playerRb: {fileID: 0}
   isDriving: 0
   originPoint: {x: 0, y: 0, z: 0}

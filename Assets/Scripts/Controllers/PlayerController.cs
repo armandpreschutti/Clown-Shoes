@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
@@ -20,18 +21,25 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] Collider2D playerCol;
-    [SerializeField] float jumpForce;
-    [SerializeField] float airControl;
     [SerializeField] Animator anim;
+
     [SerializeField] float respawnHeight;
     public GameObject lastBall;
     public bool onBall;
     public bool alive = true;
+
+    [SerializeField] float jumpForce;
+    [SerializeField] float jumpAngle;
+    [SerializeField] bool canDoubleJump;
+    [SerializeField] float airControl;
+    [SerializeField] float airControlMaxThreshold;
+    [SerializeField] float airControlMinThreshold;
+
     public static Action<PlayerController> OnRespawn;
     public static Action OnJump;
     public static Action OnGround;
-    public static Action OnLaunch;
-    
+    public static Action OnDeath;
+    public static Action OnLand;
 
 
     private void OnEnable()
@@ -64,14 +72,25 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        PlayerMovement();      
+        AirControl();      
     }
 
-    public void PlayerMovement()
+    public void AirControl()
     {
-        if(connectedBall == null && alive)
+        if(alive && !onBall && playerRb.velocity.y < airControlMaxThreshold && Mathf.Abs(moveInput.ReadValue<float>()) > .1f)
         {
+            Debug.Log("Player is in air");
             playerRb.velocity = new Vector2(moveInput.ReadValue<float>() * airControl, playerRb.velocity.y);
+            if (moveInput.ReadValue<float>() > 0.1f)
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+
+            }
+            else if (moveInput.ReadValue<float>() < -.01f)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+
         }
         else
         {
@@ -81,16 +100,38 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (connectedBall != null && alive)
+        if (alive)
         {
-            OnJump?.Invoke();
-            connectedBall.connectedBody = null;
-            playerRb.AddForce(new Vector2(moveInput.ReadValue<float>(), 1f) * jumpForce);
+
+            if (connectedBall != null)
+            {
+                OnJump?.Invoke();
+                anim.Play("Jump");
+                connectedBall.connectedBody = null;
+                playerRb.AddForce(new Vector2(0f, jumpAngle) * jumpForce, ForceMode2D.Impulse);
+                canDoubleJump = true;
+            }
+
+            else if (connectedBall == null && canDoubleJump)
+            {
+
+                anim.Play("DoubleJump");
+                OnJump?.Invoke();
+                canDoubleJump = false;
+                playerRb.velocity= Vector2.zero;
+                playerRb.AddForce(new Vector2(0f, jumpAngle) * jumpForce, ForceMode2D.Impulse);
+                canDoubleJump = false;
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {
             return;
         }
+        
     }
 
     public void Abort(InputAction.CallbackContext context)
@@ -100,7 +141,7 @@ public class PlayerController : MonoBehaviour
 
     public void RestartLevel(InputAction.CallbackContext context)
     {
-        SceneManager.LoadScene("ClownCollegeLayout");
+        SceneManager.LoadScene("ClownCollege");
     }
 
     public void ReturnToMenu(InputAction.CallbackContext context)
@@ -114,10 +155,13 @@ public class PlayerController : MonoBehaviour
     {
         if (connectedBall == null && alive)
         {
+            OnLand?.Invoke();
+            playerRb.velocity = Vector2.zero;
             connectedBall = wheel;
             lastBall = wheel.gameObject;
             onBall = true;
-            anim.SetBool("Jump", false);
+            anim.Play("Balance");
+            canDoubleJump = false;
         }
         else
         {
@@ -128,7 +172,6 @@ public class PlayerController : MonoBehaviour
 
     public void DetachBall()
     {
-        anim.SetBool("Jump", true );
         connectedBall = null;
         onBall = false;        
     }
@@ -145,16 +188,11 @@ public class PlayerController : MonoBehaviour
             connectedBall.useMotor = false;
             connectedBall.connectedBody = null;
         }
-        OnLaunch?.Invoke();
+        OnDeath?.Invoke();
         playerCol.enabled = false;
         playerRb.AddForce(new Vector2(Random.Range(-2f, 2f), Random.Range(1f, 2f) * jumpForce));
         playerRb.freezeRotation = false;
         playerRb.AddTorque(Random.Range(-1f, 1f) * 1000);
-        /*Vector2 detachForce = (new Vector2(Random.Range(-1, 1), Random.Range(-1, 1)).normalized * 120f);
-        float detachAngularForce = Random.Range(-1, 1) * 360;
-        playerRb.AddForce(detachForce);*/
-
-        //playerRb.angularVelocity = detachAngularForce;
         GetComponent<CapsuleCollider2D>().enabled = false; 
         alive = false;
         StartCoroutine(RespawnDelay());
@@ -181,7 +219,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && !onBall)
+        if (collision.gameObject.CompareTag("Ground"))
         {
             OnGround?.Invoke();
             LaunchPlayer();
@@ -190,7 +228,6 @@ public class PlayerController : MonoBehaviour
 
     public void DestoryPlayer()
     {
-        //Destroy(this.gameObject);
         this.gameObject.SetActive(false);
     }
 }

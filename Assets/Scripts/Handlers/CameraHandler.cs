@@ -16,12 +16,12 @@ public class CameraHandler : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.OnRespawn += EnableCamera;
-        PlayerController.OnLaunch += DisableCamera;
+        PlayerController.OnDeath += DisableCamera;
     }
     private void OnDisable()
     {
         PlayerController.OnRespawn -= EnableCamera;
-        PlayerController.OnLaunch -= DisableCamera;
+        PlayerController.OnDeath -= DisableCamera;
     }
 
     public void EnableCamera(PlayerController playerController)
