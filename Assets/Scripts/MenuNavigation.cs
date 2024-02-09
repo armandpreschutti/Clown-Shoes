@@ -18,7 +18,7 @@ public class MenuNavigation : MonoBehaviour
         eventSystem.SetSelectedGameObject(menuFirst);
     }
     public void OnPlayButton() {
-        SceneManager.LoadScene("ClownCollegeLayout");
+        SceneManager.LoadScene("ClownCollege");
     
     }
     public void OnCreditsButton() {

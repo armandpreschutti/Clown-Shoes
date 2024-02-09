@@ -44,6 +44,6 @@ public class FinishLineHandler : MonoBehaviour
     
     public void ReplayGame()
     {
-        SceneManager.LoadScene("ClownCollegeLayout");
+        SceneManager.LoadScene("ClownCollege");
     }
 }
