@@ -9,7 +9,7 @@ public class PlayerSFXController : MonoBehaviour
     public AudioClip squel;
     public AudioClip whistle;
     public AudioClip victory;
-
+    public AudioClip rolling;
 
     private void OnEnable()
     {
@@ -19,6 +19,7 @@ public class PlayerSFXController : MonoBehaviour
         FinishLineHandler.OnFinish += PlayVictorySFX;
         BalanceController.OnFall += PlayFallSFX;
         PauseController.OnPause += PauseSFX;
+        PlayerController.OnLand += PlayRollingSFX;
     }
 
     private void OnDisable()
@@ -29,31 +30,44 @@ public class PlayerSFXController : MonoBehaviour
         FinishLineHandler.OnFinish -= PlayVictorySFX;
         BalanceController.OnFall -= PlayFallSFX;
         PauseController.OnPause -= PauseSFX;
+        PlayerController.OnLand -= PlayRollingSFX;
     }
 
     public void PlayRespawnSFX(PlayerController playerController)
     {
+        audioSource.loop = false;
         audioSource.clip = squel;
         audioSource.Play();
     }
 
     public void PlayVictorySFX()
     {
+        audioSource.loop = false;
         audioSource.clip = victory;
         audioSource.Play();
     }
 
     public void PlayJumpSFX()
     {
+        audioSource.loop = false;
         audioSource.clip = whistle;
         audioSource.Play();
     }
 
     public void PlayFallSFX()
     {
+        audioSource.loop = false;
         audioSource.clip = boo;
         audioSource.Play();
     }
+
+    public void PlayRollingSFX()
+    {
+        audioSource.loop = true;
+        audioSource.clip = rolling;
+        audioSource.Play();
+    }
+
     public void PauseSFX(bool value)
     {
         if(value)

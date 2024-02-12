@@ -4079,6 +4079,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SFX
       objectReference: {fileID: 0}
+    - target: {fileID: 6480966114936146009, guid: 32803764d518620479138db86d6dd049, type: 3}
+      propertyPath: rolling
+      value: 
+      objectReference: {fileID: 8300000, guid: f4f59eecbd4adcd44b67ca7de6b89250, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4505,6 +4509,10 @@ PrefabInstance:
     - target: {fileID: 5599445041893699250, guid: 71d4bedbf72d3d84cb4136bb3aac691c, type: 3}
       propertyPath: m_Name
       value: Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599445041893699250, guid: 71d4bedbf72d3d84cb4136bb3aac691c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
