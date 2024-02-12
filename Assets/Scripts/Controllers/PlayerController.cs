@@ -15,10 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] InputAction moveInput;
     [SerializeField] InputAction jumpInput;
     [SerializeField] InputAction abortInput;
-    [SerializeField] InputAction mainMenuInput;
-    [SerializeField] InputAction restartInput;
+
     [SerializeField] WheelJoint2D connectedBall;
-    
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] Collider2D playerCol;
 
@@ -46,19 +44,17 @@ public class PlayerController : MonoBehaviour
     {
         jumpInput.performed += Jump;
         abortInput.performed += Abort;
-        restartInput.performed += RestartLevel;
-        mainMenuInput.performed += ReturnToMenu;
         BalanceController.OnFall += LaunchPlayer;
         FinishLineHandler.OnFinish += DestoryPlayer;
+        PauseController.OnPause += TogglePauseState;
     }
     private void OnDisable()
     {
         jumpInput.performed -= Jump;
         abortInput.performed -= Abort;
-        restartInput.performed -= RestartLevel;
-        mainMenuInput.performed -= ReturnToMenu;
         BalanceController.OnFall -= LaunchPlayer;
         FinishLineHandler.OnFinish -= DestoryPlayer;
+        PauseController.OnPause -= TogglePauseState;
     }
 
     private void Awake()
@@ -66,8 +62,6 @@ public class PlayerController : MonoBehaviour
         moveInput = playerController.actions["Move"];
         jumpInput = playerController.actions["Jump"];
         abortInput = playerController.actions["Abort"];
-        restartInput = playerController.actions["RestartLevel"];
-        mainMenuInput = playerController.actions["MainMenu"];
     }
 
     private void FixedUpdate()
@@ -89,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+
         if (alive)
         {
             if (connectedBall != null)
@@ -121,16 +116,6 @@ public class PlayerController : MonoBehaviour
     public void Abort(InputAction.CallbackContext context)
     {
         LaunchPlayer();
-    }
-
-    public void RestartLevel(InputAction.CallbackContext context)
-    {
-        SceneManager.LoadScene("ClownCollege");
-    }
-
-    public void ReturnToMenu(InputAction.CallbackContext context)
-    {
-        SceneManager.LoadScene("MainMenu");
     }
 
     public void AttachBall(WheelJoint2D wheel)
@@ -209,5 +194,22 @@ public class PlayerController : MonoBehaviour
     public void DestoryPlayer()
     {
         this.gameObject.SetActive(false);
+    }
+    public void TogglePauseState(bool value)
+    {
+        if(value)
+        {
+            moveInput.Disable();
+            jumpInput.Disable();
+            abortInput.Disable();
+        }
+        else
+        {
+            Debug.Log("Controls not paused");
+            moveInput.Enable();
+            jumpInput.Enable();
+            abortInput.Enable();
+        }
+       
     }
 }

@@ -17,7 +17,8 @@ public class PlayerSFXController : MonoBehaviour
         PlayerController.OnRespawn += PlayRespawnSFX;
         PlayerController.OnGround += PlayFallSFX;
         FinishLineHandler.OnFinish += PlayVictorySFX;
-        BalanceController.OnFall += PlayFallSFX;        
+        BalanceController.OnFall += PlayFallSFX;
+        PauseController.OnPause += PauseSFX;
     }
 
     private void OnDisable()
@@ -27,6 +28,7 @@ public class PlayerSFXController : MonoBehaviour
         PlayerController.OnGround -= PlayFallSFX;
         FinishLineHandler.OnFinish -= PlayVictorySFX;
         BalanceController.OnFall -= PlayFallSFX;
+        PauseController.OnPause -= PauseSFX;
     }
 
     public void PlayRespawnSFX(PlayerController playerController)
@@ -51,5 +53,17 @@ public class PlayerSFXController : MonoBehaviour
     {
         audioSource.clip = boo;
         audioSource.Play();
+    }
+    public void PauseSFX(bool value)
+    {
+        if(value)
+        {
+            audioSource.Pause();
+        }
+        else
+        {
+            audioSource.UnPause();
+        }
+
     }
 }

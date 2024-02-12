@@ -33,17 +33,17 @@ public class BalanceController : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.OnRespawn += ResetBalance;
-        PlayerController.OnDeath += DeactivateBalance;
+/*        PlayerController.OnDeath += DeactivateBalance;
         PlayerController.OnJump += DeactivateBalance;
-        PlayerController.OnLand += ReactivateBalance;
+        PlayerController.OnLand += ReactivateBalance;*/
         
     }
     private void OnDisable()
     {
         PlayerController.OnRespawn -= ResetBalance;
-        PlayerController.OnDeath -= DeactivateBalance;
+/*        PlayerController.OnDeath -= DeactivateBalance;
         PlayerController.OnJump -= DeactivateBalance;
-        PlayerController.OnLand -= ReactivateBalance;
+        PlayerController.OnLand -= ReactivateBalance;*/
 
     }
 
@@ -65,46 +65,24 @@ public class BalanceController : MonoBehaviour
     public void BalanceInput()
     {
         balanceIndicator.value = currentBalance;
-       /* balanceRate = ((lastInputDirection * balanceSpeed * (MathF.Abs(playerRb.velocity.x) / velocityBuffer))) * Time.deltaTime;
         currentBalance += balanceRate;
 
-        if (input > 0.1f)
-        {
-            lastInputDirection = 1;
-
-        }
-        else if (input < -.01f)
-        {
-            lastInputDirection = -1;
-        }*/
         if (input != 0 || playerRb.velocity.x > 6f)
         {
             balanceRate = ((lastInputDirection * balanceSpeed * (MathF.Abs(playerRb.velocity.x) / velocityBuffer))) * Time.deltaTime;
-            currentBalance += balanceRate;
-
-            if (input > 0.1f)
-            {
-                lastInputDirection = 1;
-            }
-            else if (input < -.01f)
-            {
-                lastInputDirection = -1;
-            }
+            GetLastInputDirection();            
         }
         else
         {
             if(currentBalance != 0)
             {
                 balanceRate = ((lastInputDirection * balanceSpeed)) * Time.deltaTime;
-                currentBalance += balanceRate;
             }
             else
             {
                 return;
             }
-
         }
-
     } 
     public void Falling()
     {
@@ -120,15 +98,27 @@ public class BalanceController : MonoBehaviour
     {
         balanceBar.SetActive(false);
     }
+
     public void ReactivateBalance()
     {
         balanceBar.SetActive(true);
     }
+
     public void ResetBalance(PlayerController playerController)
     {
         currentBalance = 0;
         ReactivateBalance();
     }
-
+    public void GetLastInputDirection()
+    {
+        if (input > 0.1f)
+        {
+            lastInputDirection = 1;
+        }
+        else if (input < -.01f)
+        {
+            lastInputDirection = -1;
+        }
+    }
 }
 

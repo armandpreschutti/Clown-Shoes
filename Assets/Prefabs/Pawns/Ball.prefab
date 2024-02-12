@@ -267,7 +267,6 @@ MonoBehaviour:
     m_Flags: 0
   ball: {fileID: 8205276114618916867}
   moveSpeed: 500
-  maxTorque: 500
-  playerRb: {fileID: 0}
   isDriving: 0
   originPoint: {x: 0, y: 0, z: 0}
+  attatchmentPoint: {fileID: 8856975874643699290}

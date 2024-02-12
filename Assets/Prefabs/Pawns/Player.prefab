@@ -210,24 +210,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  mainMenuInput:
-    m_Name: Main Menu Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a09d3345-98c0-427b-b4eb-f844140941c4
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  restartInput:
-    m_Name: Restart Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a308e576-d0be-4f0f-95e5-dc329534130c
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   connectedBall: {fileID: 0}
   playerRb: {fileID: 3144366024396555751}
   playerCol: {fileID: 3623533655372114367}
@@ -238,7 +220,7 @@ MonoBehaviour:
   jumpForce: 32
   jumpAngle: 1
   canDoubleJump: 0
-  airControl: 8.5
+  airControl: 8
   airControlMaxThreshold: 15
   airControlMinThreshold: -2
 --- !u!114 &-6685666600924306086
@@ -268,10 +250,10 @@ MonoBehaviour:
   balanceSpeed: 1.2
   lastInputDirection: 0
   currentBalance: 0
-  balanceIndicator: {fileID: 7768774773918623449}
+  balanceIndicator: {fileID: 0}
   balanceBar: {fileID: 1037209841765975076}
   playerRb: {fileID: 0}
-  velocityBuffer: 16
+  velocityBuffer: 4
   balanceRate: 0
 --- !u!50 &3144366024396555751
 Rigidbody2D:

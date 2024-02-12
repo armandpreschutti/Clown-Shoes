@@ -20,6 +20,10 @@ public class FinishLineHandler : MonoBehaviour
     public EventSystem eventSystem;
     public GameObject button;
 
+    private void Awake()
+    {
+        eventSystem= EventSystem.current;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
