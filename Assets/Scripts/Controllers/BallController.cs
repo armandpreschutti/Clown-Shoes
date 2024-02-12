@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class BallController : MonoBehaviour
 {
@@ -10,9 +11,8 @@ public class BallController : MonoBehaviour
     [SerializeField] InputAction moveInput;
     [SerializeField] WheelJoint2D ball;
     [SerializeField] float moveSpeed;
-    [SerializeField] float maxTorque;
-    [SerializeField] Rigidbody2D playerRb;
     [SerializeField] bool isDriving;
+    private float lastInputDirection;
 
     public Vector3 originPoint;
 
@@ -20,10 +20,12 @@ public class BallController : MonoBehaviour
     {
         PlayerController.OnRespawn += RepositionBall;
     }
+
     private void OnDisable()
     {
         PlayerController.OnRespawn -= RepositionBall;
     }
+
     private void Start()
     {
         originPoint = transform.position;
@@ -38,7 +40,12 @@ public class BallController : MonoBehaviour
     {
         if(isDriving)
         {
-            if (Mathf.Abs(moveInput.ReadValue<float>()) > 0.1f && isDriving)
+            /* GetMoveDirection();
+             JointMotor2D motor = ball.motor;
+             motor.motorSpeed = moveSpeed * lastInputDirection;
+             ball.motor = motor;
+             ball.useMotor = true;*/
+            if (Mathf.Abs(moveInput.ReadValue<float>()) > 0.1f)
             {
                 JointMotor2D motor = ball.motor;
                 motor.motorSpeed = moveSpeed * moveInput.ReadValue<float>();
@@ -52,6 +59,7 @@ public class BallController : MonoBehaviour
         }
         else
         {
+            //ball.useMotor = false;
             return;
         }
         
@@ -75,6 +83,7 @@ public class BallController : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -92,5 +101,17 @@ public class BallController : MonoBehaviour
         transform.rotation = Quaternion.identity;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         GetComponent<Rigidbody2D>().angularVelocity = 0f;
+    }
+    public void GetMoveDirection()
+    {
+        if (moveInput.ReadValue<float>() > 0.1f)
+        {
+            lastInputDirection = 1;
+
+        }
+        else if (moveInput.ReadValue<float>() < -.01f)
+        {
+            lastInputDirection = -1;
+        }
     }
 }

@@ -9,10 +9,12 @@ public class PlayerVFXHandler : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.OnJump += PlayJumpVFX;
+        PlayerController.OnDoubleJump += PlayJumpVFX;
     }
     private void OnDisable()
     {
         PlayerController.OnJump -= PlayJumpVFX;
+        PlayerController.OnDoubleJump -= PlayJumpVFX;
     }
 
     public void PlayJumpVFX()

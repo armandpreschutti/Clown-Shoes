@@ -17,13 +17,13 @@ public class PlayerSFXController : MonoBehaviour
         PlayerController.OnRespawn += PlayRespawnSFX;
         PlayerController.OnGround += PlayFallSFX;
         FinishLineHandler.OnFinish += PlayVictorySFX;
-        BalanceController.OnFall += PlayFallSFX;
-        
+        BalanceController.OnFall += PlayFallSFX;        
     }
+
     private void OnDisable()
     {
         PlayerController.OnJump -= PlayJumpSFX;
-       PlayerController.OnRespawn -= PlayRespawnSFX;
+        PlayerController.OnRespawn -= PlayRespawnSFX;
         PlayerController.OnGround -= PlayFallSFX;
         FinishLineHandler.OnFinish -= PlayVictorySFX;
         BalanceController.OnFall -= PlayFallSFX;
@@ -40,11 +40,13 @@ public class PlayerSFXController : MonoBehaviour
         audioSource.clip = victory;
         audioSource.Play();
     }
+
     public void PlayJumpSFX()
     {
         audioSource.clip = whistle;
         audioSource.Play();
     }
+
     public void PlayFallSFX()
     {
         audioSource.clip = boo;

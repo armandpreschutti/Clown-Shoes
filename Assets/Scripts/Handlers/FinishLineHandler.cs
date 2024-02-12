@@ -19,11 +19,6 @@ public class FinishLineHandler : MonoBehaviour
     public Transform camOffset;
     public EventSystem eventSystem;
     public GameObject button;
-/*
-    private void Start()
-    {
-        
-    }*/
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,8 +32,6 @@ public class FinishLineHandler : MonoBehaviour
             vCam.Follow = camOffset;
             vCam.LookAt = camOffset;
             eventSystem.SetSelectedGameObject(button);
-            
-
         }
     }
     

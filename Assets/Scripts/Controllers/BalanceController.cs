@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -11,19 +12,22 @@ public class BalanceController : MonoBehaviour
     public PlayerController playerController;
     public InputAction moveInput;
     public float input;
-    public bool leanDirection;
-    public float moveSpeed;
+    public float balanceSpeed;
     public int lastInputDirection = 0;
     public  float currentBalance;
     public Slider balanceIndicator;
-    public SpriteRenderer spriteRenderer;
     public GameObject balanceBar;
+    [SerializeField] Rigidbody2D playerRb;
+    [SerializeField] float velocityBuffer;
+    public float balanceRate;
+
 
     public static Action OnFall;
 
     private void Awake()
     {
         moveInput = playerInput.actions["Move"];
+        playerRb = GetComponent<Rigidbody2D>();
     }
 
     private void OnEnable()
@@ -60,20 +64,47 @@ public class BalanceController : MonoBehaviour
 
     public void BalanceInput()
     {
-        currentBalance += lastInputDirection * moveSpeed * Time.deltaTime;
         balanceIndicator.value = currentBalance;
+       /* balanceRate = ((lastInputDirection * balanceSpeed * (MathF.Abs(playerRb.velocity.x) / velocityBuffer))) * Time.deltaTime;
+        currentBalance += balanceRate;
 
         if (input > 0.1f)
         {
             lastInputDirection = 1;
-            spriteRenderer.flipX= false;
 
         }
-        else if(input < -.01f)
+        else if (input < -.01f)
         {
             lastInputDirection = -1;
-            spriteRenderer.flipX = true;
-        }      
+        }*/
+        if (input != 0 || playerRb.velocity.x > 6f)
+        {
+            balanceRate = ((lastInputDirection * balanceSpeed * (MathF.Abs(playerRb.velocity.x) / velocityBuffer))) * Time.deltaTime;
+            currentBalance += balanceRate;
+
+            if (input > 0.1f)
+            {
+                lastInputDirection = 1;
+            }
+            else if (input < -.01f)
+            {
+                lastInputDirection = -1;
+            }
+        }
+        else
+        {
+            if(currentBalance != 0)
+            {
+                balanceRate = ((lastInputDirection * balanceSpeed)) * Time.deltaTime;
+                currentBalance += balanceRate;
+            }
+            else
+            {
+                return;
+            }
+
+        }
+
     } 
     public void Falling()
     {

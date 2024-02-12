@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 3623533655372114367}
   - component: {fileID: 4385751263416627078}
   - component: {fileID: 4523515838918906181}
+  - component: {fileID: 5433692833312428042}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -230,7 +231,6 @@ MonoBehaviour:
   connectedBall: {fileID: 0}
   playerRb: {fileID: 3144366024396555751}
   playerCol: {fileID: 3623533655372114367}
-  anim: {fileID: 4627241143533613997}
   respawnHeight: 3
   lastBall: {fileID: 0}
   onBall: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   jumpForce: 32
   jumpAngle: 1
   canDoubleJump: 0
-  airControl: 6
+  airControl: 8.5
   airControlMaxThreshold: 15
   airControlMinThreshold: -2
 --- !u!114 &-6685666600924306086
@@ -265,13 +265,14 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   input: 0
-  leanDirection: 0
-  moveSpeed: 1
+  balanceSpeed: 1.2
   lastInputDirection: 0
   currentBalance: 0
   balanceIndicator: {fileID: 7768774773918623449}
-  spriteRenderer: {fileID: 1677866116793610066}
   balanceBar: {fileID: 1037209841765975076}
+  playerRb: {fileID: 0}
+  velocityBuffer: 16
+  balanceRate: 0
 --- !u!50 &3144366024396555751
 Rigidbody2D:
   serializedVersion: 4
@@ -450,6 +451,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpVFX: {fileID: 6405435064297451851, guid: d673aa8ab0444c74da24f89c460a3bcc, type: 3}
+--- !u!114 &5433692833312428042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4337862031303038898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d764a16b5962e499efc96a6f0647f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  moveInput:
+    m_Name: Move Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8ab83512-53d2-4b6d-bdd1-bf229ccd9725
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  spriteRenderer: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1 &5020867609767808562
 GameObject:
   m_ObjectHideFlags: 0

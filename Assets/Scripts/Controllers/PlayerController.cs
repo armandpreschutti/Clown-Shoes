@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] Collider2D playerCol;
-    [SerializeField] Animator anim;
 
     [SerializeField] float respawnHeight;
     public GameObject lastBall;
@@ -37,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     public static Action<PlayerController> OnRespawn;
     public static Action OnJump;
+    public static Action OnDoubleJump;
     public static Action OnGround;
     public static Action OnDeath;
     public static Action OnLand;
@@ -79,18 +79,7 @@ public class PlayerController : MonoBehaviour
     {
         if(alive && !onBall && playerRb.velocity.y < airControlMaxThreshold && Mathf.Abs(moveInput.ReadValue<float>()) > .1f)
         {
-            Debug.Log("Player is in air");
             playerRb.velocity = new Vector2(moveInput.ReadValue<float>() * airControl, playerRb.velocity.y);
-            if (moveInput.ReadValue<float>() > 0.1f)
-            {
-                GetComponent<SpriteRenderer>().flipX = false;
-
-            }
-            else if (moveInput.ReadValue<float>() < -.01f)
-            {
-                GetComponent<SpriteRenderer>().flipX = true;
-            }
-
         }
         else
         {
@@ -102,11 +91,9 @@ public class PlayerController : MonoBehaviour
     {
         if (alive)
         {
-
             if (connectedBall != null)
             {
                 OnJump?.Invoke();
-                anim.Play("Jump");
                 connectedBall.connectedBody = null;
                 playerRb.AddForce(new Vector2(0f, jumpAngle) * jumpForce, ForceMode2D.Impulse);
                 canDoubleJump = true;
@@ -114,9 +101,7 @@ public class PlayerController : MonoBehaviour
 
             else if (connectedBall == null && canDoubleJump)
             {
-
-                anim.Play("DoubleJump");
-                OnJump?.Invoke();
+                OnDoubleJump?.Invoke();
                 canDoubleJump = false;
                 playerRb.velocity= Vector2.zero;
                 playerRb.AddForce(new Vector2(0f, jumpAngle) * jumpForce, ForceMode2D.Impulse);
@@ -130,8 +115,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             return;
-        }
-        
+        }        
     }
 
     public void Abort(InputAction.CallbackContext context)
@@ -149,8 +133,6 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    // Ball Attachment Logic
-
     public void AttachBall(WheelJoint2D wheel)
     {
         if (connectedBall == null && alive)
@@ -160,14 +142,12 @@ public class PlayerController : MonoBehaviour
             connectedBall = wheel;
             lastBall = wheel.gameObject;
             onBall = true;
-            anim.Play("Balance");
             canDoubleJump = false;
         }
         else
         {
             return;
         }
-
     }
 
     public void DetachBall()
