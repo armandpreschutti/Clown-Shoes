@@ -9,12 +9,13 @@ public class BallController : MonoBehaviour
 {
     [SerializeField] PlayerInput playerController;
     [SerializeField] InputAction moveInput;
-    [SerializeField] WheelJoint2D ball;
-    [SerializeField] float moveSpeed;
-    [SerializeField] bool isDriving;
+    public WheelJoint2D ball;
+    public float moveSpeed;
+    public bool isDriving;
 
     public Vector3 originPoint;
     public Transform attatchmentPoint;
+
     private void OnEnable()
     {
         PlayerController.OnRespawn += RepositionBall;

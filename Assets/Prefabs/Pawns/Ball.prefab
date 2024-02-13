@@ -119,7 +119,7 @@ WheelJoint2D:
     m_Angle: 90
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 100
+    m_MotorSpeed: 200
     m_MaximumMotorForce: 10000
 --- !u!58 &6634804372444438168
 CircleCollider2D:

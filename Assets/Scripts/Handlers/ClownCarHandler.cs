@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class ClownCarHandler : MonoBehaviour
@@ -10,9 +11,12 @@ public class ClownCarHandler : MonoBehaviour
     [SerializeField] bool onBoard;
     [SerializeField] Vector3 originPoint;
     [SerializeField] float distance;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] Transform endPoint;
     private void Awake()
     {
-        originPoint = car.transform.position;
+        originPoint = transform.position;
+        distance = originPoint.x + endPoint.localPosition.x;
     }
 
     private void OnEnable()
@@ -27,22 +31,23 @@ public class ClownCarHandler : MonoBehaviour
 
     public void Update()
     {
-        if(onBoard && car.transform.position.x < originPoint.x + distance)
+        if(onBoard && transform.position.x < distance)
         {
-            car.transform.Translate(Vector2.right * carSpeed * Time.deltaTime);
+            rb.velocity = new Vector2(carSpeed, 0f);
         }
         else
         {
-            return;
+            rb.velocity = Vector2.zero;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Player is on the car");
             onBoard = true;
+            //collision.GetComponent<BalanceController>().balanceSpeed *= 2f;
         }
     }
 
@@ -51,12 +56,31 @@ public class ClownCarHandler : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Player fell off the car");
-            onBoard= false;
+            onBoard = false;
+            //collision.GetComponent<BalanceController>().balanceSpeed /= 2f;
+        }
+    }*/
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ball"))
+        {
+            if (collision.GetComponent<BallController>().isDriving)
+            {
+                Debug.Log("Player is on the car");
+                onBoard = true;
+
+            }
+            else
+            {
+                Debug.Log("Player fell off the car");
+                onBoard = false;
+            }
         }
     }
 
     public void ResetCar(PlayerController playerController)
     {
-        car.transform.position = originPoint;
+        transform.position = originPoint;
     }
 }

@@ -16,10 +16,11 @@ public class HazardController : MonoBehaviour
             Debug.Log("Player hit a pin");
             GameObject player = collision.gameObject;
             PlayerController playerController = player.GetComponent<PlayerController>();
-            if (playerController.IsAttachedToBall())
+            playerController.LaunchPlayer();
+            /*if (playerController.IsAttachedToBall())
             {
                 playerController.LaunchPlayer();
-            }
+            }*/
         }
     }
 }
