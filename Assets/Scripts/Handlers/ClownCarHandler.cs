@@ -31,7 +31,7 @@ public class ClownCarHandler : MonoBehaviour
 
     public void Update()
     {
-        if(onBoard && transform.position.x < distance)
+        if (onBoard && transform.position.x < distance)
         {
             rb.velocity = new Vector2(carSpeed, 0f);
         }
@@ -40,26 +40,6 @@ public class ClownCarHandler : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("Player is on the car");
-            onBoard = true;
-            //collision.GetComponent<BalanceController>().balanceSpeed *= 2f;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("Player fell off the car");
-            onBoard = false;
-            //collision.GetComponent<BalanceController>().balanceSpeed /= 2f;
-        }
-    }*/
 
     private void OnTriggerStay2D(Collider2D collision)
     {

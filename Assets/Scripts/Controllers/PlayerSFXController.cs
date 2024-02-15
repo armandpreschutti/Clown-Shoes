@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSFXController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerSFXController : MonoBehaviour
         BalanceController.OnFall += PlayFallSFX;
         PauseController.OnPause += PauseSFX;
         PlayerController.OnLand += PlayRollingSFX;
+        SceneManager.sceneLoaded += ResetSFX;
     }
 
     private void OnDisable()
@@ -31,6 +33,7 @@ public class PlayerSFXController : MonoBehaviour
         BalanceController.OnFall -= PlayFallSFX;
         PauseController.OnPause -= PauseSFX;
         PlayerController.OnLand -= PlayRollingSFX;
+        SceneManager.sceneLoaded -= ResetSFX;
     }
 
     public void PlayRespawnSFX(PlayerController playerController)
@@ -78,6 +81,10 @@ public class PlayerSFXController : MonoBehaviour
         {
             audioSource.UnPause();
         }
-
+    }
+    public void ResetSFX(Scene scene, LoadSceneMode mode)
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
     }
 }

@@ -146,3 +146,4 @@ MonoBehaviour:
   squel: {fileID: 8300000, guid: 2ceaaf4f3d73969468e9a0482f20deea, type: 3}
   whistle: {fileID: 8300000, guid: 4feda59e71021ac488282c65ac359e56, type: 3}
   victory: {fileID: 8300000, guid: 1a3d5f05812a92b4bbfef3bc547dfc8b, type: 3}
+  rolling: {fileID: 8300000, guid: 3d2f5d1cf66e1474dbf254373ea41544, type: 3}

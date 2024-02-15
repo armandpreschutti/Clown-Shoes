@@ -28,6 +28,7 @@ public class BalanceController : MonoBehaviour
     {
         moveInput = playerInput.actions["Move"];
         playerRb = GetComponent<Rigidbody2D>();
+        SetBalanceDifficulty();
     }
 
     private void OnEnable()
@@ -118,6 +119,39 @@ public class BalanceController : MonoBehaviour
         else if (input < -.01f)
         {
             lastInputDirection = -1;
+        }
+    }
+    public void SetBalanceDifficulty()
+    {
+        if (GameManager.GetInstance())
+        {
+            Debug.Log("GameManager Found");
+            switch (GameManager.GetInstance().difficultySetting)
+            {
+                case "easy":
+                    balanceSpeed = .8f;
+                    velocityBuffer = 8;
+                    break;
+
+                case "normal":
+                    balanceSpeed = 1.2f;
+                    velocityBuffer = 4;
+                    break;
+
+                case "hard":
+                    balanceSpeed = 1.4f;
+                    velocityBuffer = 3;
+                    break;
+
+                default:
+                    Debug.LogError("There was an issue setting the balance difficulty");
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("GameManager Not Found");
+            return;
         }
     }
 }
