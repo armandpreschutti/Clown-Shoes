@@ -9,6 +9,15 @@ public class CourseTimeHandler : MonoBehaviour
     private float elapsedTime = 0f; // Elapsed time for the stopwatch
     [SerializeField] bool isRunning = false; // Flag to track if the stopwatch is running
 
+
+    private void OnEnable()
+    {
+        FinishLineHandler.OnFinish += DeactivateCourseTimer;
+    }
+    private void OnDisable()
+    {
+        FinishLineHandler.OnFinish -= DeactivateCourseTimer;
+    }
     private void Update()
     {
         if (isRunning)
@@ -47,5 +56,9 @@ public class CourseTimeHandler : MonoBehaviour
         int seconds = (int)(elapsedTime % 60f);
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+    public void DeactivateCourseTimer()
+    {
+        GameObject.Find("CourseTimer").SetActive(false);
     }
 }

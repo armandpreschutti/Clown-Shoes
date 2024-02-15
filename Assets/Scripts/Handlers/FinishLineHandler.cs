@@ -43,4 +43,9 @@ public class FinishLineHandler : MonoBehaviour
     {
         SceneManager.LoadScene("ClownCollege");
     }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }

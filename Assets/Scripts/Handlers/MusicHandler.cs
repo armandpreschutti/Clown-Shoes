@@ -13,12 +13,12 @@ public class MusicHandler : MonoBehaviour
     private void OnEnable()
     {
         FinishLineHandler.OnFinish += PlayPostGameMusic;
-        SceneManager.sceneLoaded += PlayMainMenuMusic;
+        SceneManager.sceneLoaded += PlaySceneMusic;
     }
     private void OnDisable()
     {
         FinishLineHandler.OnFinish -= PlayPostGameMusic;
-        SceneManager.sceneLoaded -= PlayMainMenuMusic;
+        SceneManager.sceneLoaded -= PlaySceneMusic;
     }
 
     public void PlayPostGameMusic()
@@ -27,14 +27,19 @@ public class MusicHandler : MonoBehaviour
         audioSource.volume= 1.0f;
         audioSource.Play();
     }
-    public void PlayMainMenuMusic(Scene scene, LoadSceneMode mode)
+    public void PlaySceneMusic(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "MainMenu")
         {
             audioSource.clip = mainMenuMusic;
-            audioSource.volume = .1f;
+            audioSource.volume = .2f;
+            audioSource.Play();
+        }        
+        if(scene.name == "ClownCollege")
+        {
+            audioSource.clip = clownCollegeMusic;
+            audioSource.volume = .5f;
             audioSource.Play();
         }
-        
     }
 }

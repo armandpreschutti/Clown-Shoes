@@ -34,6 +34,7 @@ public class BalanceController : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.OnRespawn += ResetBalance;
+        FinishLineHandler.OnFinish += DeactivateFixedBar;
 /*        PlayerController.OnDeath += DeactivateBalance;
         PlayerController.OnJump += DeactivateBalance;
         PlayerController.OnLand += ReactivateBalance;*/
@@ -42,9 +43,10 @@ public class BalanceController : MonoBehaviour
     private void OnDisable()
     {
         PlayerController.OnRespawn -= ResetBalance;
-/*        PlayerController.OnDeath -= DeactivateBalance;
-        PlayerController.OnJump -= DeactivateBalance;
-        PlayerController.OnLand -= ReactivateBalance;*/
+        FinishLineHandler.OnFinish -= DeactivateFixedBar;
+        /*        PlayerController.OnDeath -= DeactivateBalance;
+                PlayerController.OnJump -= DeactivateBalance;
+                PlayerController.OnLand -= ReactivateBalance;*/
 
     }
 
@@ -153,6 +155,10 @@ public class BalanceController : MonoBehaviour
             Debug.Log("GameManager Not Found");
             return;
         }
+    }
+    public void DeactivateFixedBar()
+    {
+        GameObject.Find("BalanceBar").SetActive(false);
     }
 }
 

@@ -33,10 +33,12 @@ public class PauseController : MonoBehaviour
     private void OnEnable()
     {
         pauseInput.performed += PauseGame;
+        FinishLineHandler.OnFinish += DeactivatePause;
     }
     private void OnDisable()
     {
         pauseInput.performed -= PauseGame;
+        FinishLineHandler.OnFinish -= DeactivatePause;
     }
 
     public void PauseGame(InputAction.CallbackContext context)
@@ -77,5 +79,9 @@ public class PauseController : MonoBehaviour
     {
         TogglePauseMenu();
         SceneManager.LoadScene("MainMenu");
+    }
+    public void DeactivatePause()
+    {
+        pauseButton.SetActive(false);
     }
 }
