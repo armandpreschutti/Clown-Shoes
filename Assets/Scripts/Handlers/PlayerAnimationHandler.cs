@@ -24,6 +24,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         PlayerController.OnDoubleJump+= PlayDoubleJumpAnimation;
         PlayerController.OnLand += PlayBalanceAnimation;
         PlayerController.OnRespawn += ResetAnimation;
+        PlayerController.OnDeath += PlayDeathAnimation;
     }
 
     private void OnDisable()
@@ -31,18 +32,23 @@ public class PlayerAnimationHandler : MonoBehaviour
         PlayerController.OnJump -= PlayJumpAnimation;
         PlayerController.OnDoubleJump -= PlayDoubleJumpAnimation;
         PlayerController.OnLand -= PlayBalanceAnimation;
-        PlayerController.OnRespawn -= ResetAnimation; 
+        PlayerController.OnRespawn -= ResetAnimation;
+        PlayerController.OnDeath -= PlayDeathAnimation;
     }
 
     private void Update()
     {
-        if (moveInput.ReadValue<float>() > 0.1f)
+        if (GetComponent<Rigidbody2D>().velocity.x > 0.1f)
         {
             spriteRenderer.flipX = false;
         }
-        else if (moveInput.ReadValue<float>() < -.01f)
+        else if (GetComponent<Rigidbody2D>().velocity.x < -.01f)
         {
             spriteRenderer.flipX = true;
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -61,8 +67,14 @@ public class PlayerAnimationHandler : MonoBehaviour
         anim.Play("Balance");
     }
 
+    public void PlayDeathAnimation()
+    {
+        anim.Play("Death");
+    }
+
     public void ResetAnimation(PlayerController playerController)
     {
         anim.Play("Balance");
     }
+
 }
