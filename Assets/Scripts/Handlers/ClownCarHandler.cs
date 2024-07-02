@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -13,6 +14,10 @@ public class ClownCarHandler : MonoBehaviour
     [SerializeField] float distance;
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Transform endPoint;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip clownCarSFX;
+    public static Action<bool> OnClownCar;
+
     private void Awake()
     {
         originPoint = transform.position;
@@ -22,11 +27,13 @@ public class ClownCarHandler : MonoBehaviour
     private void OnEnable()
     {
         PlayerController.OnRespawn += ResetCar;
+        OnClownCar += PlayClownCarSFX;
     }
 
     private void OnDisable()
     {
         PlayerController.OnRespawn -= ResetCar;
+        OnClownCar -= PlayClownCarSFX;
     }
 
     public void Update()
@@ -40,27 +47,74 @@ public class ClownCarHandler : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
+/*    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ball") && collision.GetComponent<BallController>().isDriving)
+        {
+            OnClownCar?.Invoke(true);
+
+        }
+    }*/
+    
+        
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Ball"))
         {
-            if (collision.GetComponent<BallController>().isDriving)
-            {
-                Debug.Log("Player is on the car");
-                onBoard = true;
-
-            }
-            else
-            {
-                Debug.Log("Player fell off the car");
-                onBoard = false;
-            }
+         
+            onBoard = collision.GetComponent<BallController>().isDriving ? true : false;
+            OnClownCar?.Invoke(onBoard);
         }
     }
+  /*  private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ball") && !collision.GetComponent<BallController>().isDriving)
+        {
 
+            onBoard = collision.GetComponent<BallController>().isDriving ? true : false;
+            OnClownCar?.Invoke(false);
+
+        }
+    }
+*/
     public void ResetCar(PlayerController playerController)
     {
         transform.position = originPoint;
+    }
+    public void PlayClownCarSFX(bool value)
+    {
+      /*  // Clone the original audio clip
+        AudioClip clonedClip = UnityEngine.Object.Instantiate(clownCarSFX);
+
+        // Calculate the new length of the audio clip based on the speed
+        int newLength = (int)(clonedClip.samples / 2);
+
+        // Create a new array to hold the modified audio data
+        float[] newData = new float[newLength * clonedClip.channels];
+
+        // Copy the modified audio data into the new array
+        clonedClip.GetData(newData, 0);
+
+        // Set the modified audio data to the cloned audio clip
+        clonedClip.SetData(newData, 0);
+
+        // Assign the modified audio clip to the AudioSource
+        audioSource.clip = clonedClip;
+
+        *//*// Play the modified audio clip
+        audioSource.Play();*/
+
+        if (value)
+        {
+
+            audioSource.enabled = true;
+        }
+        else
+        {
+            audioSource.enabled = false;
+        }
+
+
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class PlayerSFXController : MonoBehaviour
     public AudioClip whistle;
     public AudioClip victory;
     public AudioClip rolling;
+    public AudioClip clownCar;
 
     private void OnEnable()
     {
@@ -21,6 +23,7 @@ public class PlayerSFXController : MonoBehaviour
         BalanceController.OnFall += PlayFallSFX;
         PauseController.OnPause += PauseSFX;
         PlayerController.OnLand += PlayRollingSFX;
+        ClownCarHandler.OnClownCar += PlayClownCarSFX;
         SceneManager.sceneLoaded += ResetSFX;
     }
 
@@ -28,11 +31,12 @@ public class PlayerSFXController : MonoBehaviour
     {
         PlayerController.OnJump -= PlayJumpSFX;
         PlayerController.OnRespawn -= PlayRespawnSFX;
-        PlayerController.OnGround -= PlayFallSFX;
+        PlayerController.OnDeath -= PlayFallSFX;
         FinishLineHandler.OnFinish -= PlayVictorySFX;
         BalanceController.OnFall -= PlayFallSFX;
         PauseController.OnPause -= PauseSFX;
         PlayerController.OnLand -= PlayRollingSFX;
+        ClownCarHandler.OnClownCar -= PlayClownCarSFX;
         SceneManager.sceneLoaded -= ResetSFX;
     }
 
@@ -70,6 +74,19 @@ public class PlayerSFXController : MonoBehaviour
         audioSource.clip = rolling;
         audioSource.Play();
     }
+    public void PlayClownCarSFX(bool value)
+    {
+        if (value)
+        {
+            audioSource.loop = false;
+            audioSource.clip = clownCar;
+
+        }
+        else
+        {
+            audioSource.Stop();
+        }
+    } 
 
     public void PauseSFX(bool value)
     {
@@ -87,4 +104,5 @@ public class PlayerSFXController : MonoBehaviour
         audioSource.Stop();
         audioSource.clip = null;
     }
+
 }
